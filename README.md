@@ -1,1 +1,0 @@
-# pilso-infographic
