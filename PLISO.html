@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilso OS: The Secure Operating System for an AI-Native Web3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- 
+    Infographic Generation Plan:
+
+    Palette Name: Pilso Glow
+    Colors:
+    - Background: #0D1117 (Very Dark Grey/Black)
+    - Card Background: #161B22 (Dark Grey)
+    - Primary Text: #E6EDF3 (Light Grey/White)
+    - Secondary Accent: #58A6FF (Bright Blue)
+    - Primary Accent: #39D353 (Neon Green)
+
+    Narrative Structure:
+    1.  The Problem: A Fatal Flaw in Web3 AI - Hook with the security risk of agents needing private keys.
+    2.  The Solution: The Wallet as Signer Paradigm - Introduce Pilso's core non-custodial architecture.
+    3.  How It Works: Under the Hood - Detail features like the Modular MCP Framework and Role-Based Agents.
+    4.  The Fuel: $PILSO Tokenomics - Explain the token's utility and fair launch model.
+    5.  The Vision: Building a Trustless Future - Conclude with market trends and Pilso's vision.
+    6.  Join the Community: Links to social channels and website.
+
+    Visualization Plan:
+    - Section 1 (Problem): Single Big Number card (HTML/CSS) to highlight the risk. Goal: Inform. Method: Styled text and Unicode icons. Confirmed: NO SVG.
+    - Section 2 (Solution): Flow Chart (HTML/CSS with Tailwind) showing the Pilso operational flow. Goal: Organize. Method: Flexbox and styled divs for arrows. Confirmed: NO SVG, NO MERMAID JS.
+    - Section 3 (Features): Styled feature cards (HTML/CSS with Tailwind) for MCP Modules and Agent Roles. Goal: Organize/Compare. Method: Unicode icons and text. Confirmed: NO SVG.
+    - Section 4 (Tokenomics): Donut Chart (Chart.js) for token allocation and "Big Number" cards for metrics. Goal: Compare/Inform. Method: Chart.js Canvas and HTML/CSS. Confirmed: NO SVG.
+    - Section 5 (Vision): Radar Chart (Chart.js) showing the strength of converging market trends. Goal: Compare/Show Relationships. Method: Chart.js Canvas. Confirmed: NO SVG.
+    - Section 6 (Community): Buttons/links for Telegram, X, and Website. Goal: Inform/Call to Action. Method: HTML/CSS. Confirmed: NO SVG.
+
+    Constraint Confirmation:
+    - NEITHER Mermaid JS NOR SVG were used anywhere in this output. All diagrams are implemented with HTML/CSS and all charts with Chart.js on a Canvas element.
+    -->
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0D1117;
+            color: #E6EDF3;
+        }
+        .glow-accent {
+            text-shadow: 0 0 8px #39D353, 0 0 10px #39D353;
+        }
+        .card {
+            background-color: #161B22;
+            border: 1px solid #30363d;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(57, 211, 83, 0.1), 0 4px 6px -2px rgba(57, 211, 83, 0.05);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #58A6FF;
+            font-size: 2rem;
+            transform: rotate(90deg);
+        }
+        @media (min-width: 768px) {
+            .flow-arrow {
+                transform: rotate(0deg);
+            }
+        }
+        .btn-primary {
+            @apply inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#39D353] hover:bg-[#2e9e42] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#39D353] transition ease-in-out duration-150;
+        }
+        .btn-secondary {
+            @apply inline-flex items-center px-6 py-3 border border-[#30363d] text-base font-medium rounded-md shadow-sm text-white bg-[#161B22] hover:bg-[#21262d] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#58A6FF] transition ease-in-out duration-150;
+        }
+        .input-field {
+            @apply block w-full px-4 py-2 bg-[#0D1117] border border-[#30363d] rounded-md text-white placeholder-gray-500 focus:ring-[#58A6FF] focus:border-[#58A6FF] sm:text-sm;
+        }
+        .response-area {
+            @apply mt-4 p-4 bg-[#0D1117] border border-[#30363d] rounded-md text-gray-300 text-sm overflow-auto max-h-48;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #39D353;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="relative overflow-hidden">
+        <main class="relative mt-16 sm:mt-24">
+            <div class="mx-auto max-w-7xl">
+                <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+                    <div class="px-4 sm:px-6 sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left lg:flex lg:items-center">
+                        <div>
+                            <h1 class="mt-4 text-4xl font-extrabold tracking-tight text-white sm:mt-5 sm:leading-none lg:mt-6 lg:text-5xl xl:text-6xl">
+                                <span class="text-[#E6EDF3]">Pilso OS: The Secure OS for an</span>
+                                <span class="glow-accent text-[#39D353]">AI-Native Web3</span>
+                            </h1>
+                            <p class="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+                                An infographic on the protocol-level primitive enabling secure, non-custodial onchain operations for AI agents. We explore the problem, the solution, and the vision for a truly trustless digital future.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mt-16 sm:mt-24 lg:mt-0 lg:col-span-6">
+                        <div class="bg-[#161B22] sm:max-w-md sm:w-full sm:mx-auto sm:rounded-lg sm:overflow-hidden p-8">
+                           <div class="relative w-full h-64">
+                                <div class="absolute w-16 h-16 rounded-full bg-[#39D353] opacity-50 -top-4 -left-4 animate-pulse"></div>
+                                <div class="absolute w-24 h-24 rounded-full bg-[#58A6FF] opacity-50 -bottom-8 -right-4 animate-pulse"></div>
+                                <div class="absolute w-8 h-8 rounded bg-[#39D353] top-1/2 left-1/2 animate-spin-slow"></div>
+                                <div class="absolute text-7xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-80">🤖</div>
+                                <div class="absolute text-7xl top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 opacity-80">🔑</div>
+                                <div class="absolute text-7xl bottom-1/4 right-1/4 -translate-x-1/2 -translate-y-1/2 opacity-80">⛓</div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="py-16 sm:py-24">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div id="problem" class="text-center">
+                    <h2 class="text-base font-semibold text-[#39D353] tracking-wider uppercase">1. The Problem</h2>
+                    <p class="mt-2 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">A Fatal Flaw in Web3 AI</p>
+                    <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-400">The promise of AI agents in Web3 is immense, but the current landscape is plagued by a critical vulnerability. Most "AI agents" require access to your private keys, reintroducing custodial risk and fundamentally breaking the core tenets of decentralization.</p>
+                </div>
+
+                <div class="mt-12">
+                    <div class="card max-w-md mx-auto rounded-xl p-8 text-center border-red-500/50 shadow-red-500/10">
+                        <div class="text-8xl">🚨</div>
+                        <p class="mt-4 text-2xl font-bold text-white">"Not Your Keys, Not Your AI"</p>
+                        <p class="mt-2 text-gray-300">Handing over private keys to an AI is like giving a stranger the password to your bank account. It's a non-starter for serious users, developers, and institutions who prioritize self-custody and security.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="py-16 sm:py-24 bg-[#161B22]">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div id="solution" class="text-center">
+                    <h2 class="text-base font-semibold text-[#39D353] tracking-wider uppercase">2. The Solution</h2>
+                    <p class="mt-2 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">A New Paradigm: The Wallet as Signer</p>
+                    <p class="mt-4 max-w-3xl mx-auto text-xl text-gray-400">Pilso OS solves the private key dilemma by flipping the model. It establishes a non-custodial architecture where the wallet remains the sole signer, the LLM acts as the pilot, and modular servers provide trusted middleware. Your keys never leave your wallet.</p>
+                </div>
+
+                <div class="mt-12 space-y-8 md:space-y-0 md:flex md:items-center md:justify-center md:space-x-8">
+                    <div class="flex flex-col items-center text-center p-4">
+                        <div class="text-6xl mb-2">🧑‍💻</div>
+                        <h3 class="font-bold text-lg text-white">1. User Intent</h3>
+                        <p class="text-sm text-gray-400">Prompts in natural language.</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flex flex-col items-center text-center p-4">
+                        <div class="text-6xl mb-2">🧠</div>
+                        <h3 class="font-bold text-lg text-white">2. LLM Agent</h3>
+                        <p class="text-sm text-gray-400">Interprets goal, selects tools.</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flex flex-col items-center text-center p-4">
+                        <div class="text-6xl mb-2">🛠</div>
+                        <h3 class="font-bold text-lg text-white">3. MCP Servers</h3>
+                        <p class="text-sm text-gray-400">Construct transaction payload.</p>
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flex flex-col items-center text-center p-4">
+                         <div class="text-6xl mb-2">✍</div>
+                        <h3 class="font-bold text-lg text-white">4. Wallet Signer</h3>
+                        <p class="text-sm text-gray-400">User securely signs with their key.</p>
+                    </div>
+                     <div class="flow-arrow">→</div>
+                    <div class="flex flex-col items-center text-center p-4">
+                        <div class="text-6xl mb-2">⛓</div>
+                        <h3 class="font-bold text-lg text-white">5. Blockchain</h3>
+                        <p class="text-sm text-gray-400">Transaction is executed onchain.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="py-16 sm:py-24">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div id="features" class="text-center">
+                    <h2 class="text-base font-semibold text-[#39D353] tracking-wider uppercase">3. How It Works</h2>
+                    <p class="mt-2 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">Under the Hood of Pilso OS</p>
+                    <p class="mt-4 max-w-3xl mx-auto text-xl text-gray-400">Pilso is built on a foundation of modularity and security, offering powerful features for both users and developers.</p>
+                </div>
+                <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-2">
+                    <div class="card rounded-xl p-6">
+                        <h3 class="text-xl font-bold text-white mb-3">Modular MCP Server Framework</h3>
+                        <p class="text-gray-400 mb-4">Think of it as LEGO for blockchain operations. Each task is handled by a dedicated, composable, and trustless server, making the system incredibly flexible and extensible.</p>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex items-center"><span class="w-2 h-2 mr-2 rounded-full bg-[#39D353]"></span>metamask-mcp: For secure transaction signing.</div>
+                            <div class="flex items-center"><span class="w-2 h-2 mr-2 rounded-full bg-[#39D353]"></span>solc-mcp: For compiling Solidity smart contracts.</div>
+                            <div class="flex items-center"><span class="w-2 h-2 mr-2 rounded-full bg-[#39D353]"></span>erc20-mcp: For safe ERC20 token interactions.</div>
+                            <div class="flex items-center"><span class="w-2 h-2 mr-2 rounded-full bg-[#39D353]"></span>chainlist-mcp: For fetching chain info & RPCs.</div>
+                        </div>
+                    </div>
+                    <div class="card rounded-xl p-6">
+                        <h3 class="text-xl font-bold text-white mb-3">Role-Based Agent Personalities</h3>
+                        <p class="text-gray-400 mb-4">Agents aren't generic chatbots. They are assigned specific roles with built-in guardrails to prevent unintended actions, ensuring predictable and secure behavior.</p>
+                         <div class="space-y-3 text-sm">
+                            <div class="flex items-center"><span class="text-2xl mr-2">✍</span><span class="font-bold">Signer:</span>&nbsp;Specialized for transaction signing tasks.</div>
+                            <div class="flex items-center"><span class="text-2xl mr-2">💻</span><span class="font-bold">Developer:</span>&nbsp;Focused on contract deployment and testing.</div>
+                            <div class="flex items-center"><span class="text-2xl mr-2">🔍</span><span class="font-bold">Auditor:</span>&nbsp;Designed for code analysis and security checks.</div>
+                            <div class="flex items-center"><span class="text-2xl mr-2">🤖</span><span class="font-bold">Generic:</span>&nbsp;A general-purpose agent for varied tasks.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="py-16 sm:py-24 bg-[#161B22]">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div id="tokenomics" class="text-center">
+                    <h2 class="text-base font-semibold text-[#39D353] tracking-wider uppercase">4. The Fuel</h2>
+                    <p class="mt-2 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">$PILSO Tokenomics</p>
+                    <p class="mt-4 max-w-3xl mx-auto text-xl text-gray-400">The $PILSO token is the execution key that powers the entire ecosystem, facilitating trustless coordination and aligning incentives for long-term growth.</p>
+                </div>
+                <div class="mt-12 grid gap-8 md:grid-cols-2">
+                    <div class="flex flex-col items-center justify-center card p-6 rounded-xl">
+                        <h3 class="text-xl font-bold text-white text-center mb-4">Token Allocation</h3>
+                        <div class="chart-container">
+                            <canvas id="tokenomicsChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="card p-6 rounded-xl text-center">
+                            <p class="text-gray-400 text-sm">Total Supply</p>
+                            <p class="text-4xl font-bold text-[#39D353]">100M</p>
+                        </div>
+                        <div class="card p-6 rounded-xl text-center">
+                            <p class="text-gray-400 text-sm">Launch Type</p>
+                            <p class="text-3xl font-bold text-[#58A6FF]">Fair Launch</p>
+                            <p class="text-xs text-gray-500">(No VCs, No Presale)</p>
+                        </div>
+                        <div class="card p-6 rounded-xl text-center">
+                            <p class="text-gray-400 text-sm">Buy Tax</p>
+                            <p class="text-4xl font-bold text-white">5%</p>
+                        </div>
+                        <div class="card p-6 rounded-xl text-center">
+                            <p class="text-gray-400 text-sm">Sell Tax</p>
+                            <p class="text-4xl font-bold text-white">5%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="py-16 sm:py-24">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div id="vision" class="text-center">
+                    <h2 class="text-base font-semibold text-[#39D353] tracking-wider uppercase">5. The Vision</h2>
+                    <p class="mt-2 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">Building a Trustless Future</p>
+                    <p class="mt-4 max-w-3xl mx-auto text-xl text-gray-400">Pilso OS is strategically positioned to capitalize on powerful market trends, paving the way for a truly AI-native Web3 built on security and user sovereignty.</p>
+                </div>
+                <div class="mt-12 grid gap-8 md:grid-cols-2 items-center">
+                     <div class="card p-6 rounded-xl">
+                        <h3 class="text-xl font-bold text-white mb-3">Converging Market Trends</h3>
+                        <p class="text-gray-400 mb-4">Pilso OS isn't just a novel idea; it's a timely solution meeting a clear market need. Several key trends are converging to create the perfect environment for its adoption.</p>
+                        <ul class="space-y-3 text-gray-300">
+                           <li class="flex items-start"><span class="w-4 h-4 mr-3 mt-1 rounded-full bg-[#58A6FF] flex-shrink-0"></span><div><span class="font-bold">Wallet Standardization:</span> Robust signing APIs from major wallets provide a secure foundation.</div></li>
+                           <li class="flex items-start"><span class="w-4 h-4 mr-3 mt-1 rounded-full bg-[#58A6FF] flex-shrink-0"></span><div><span class="font-bold">Programmable LLMs:</span> Advanced AI can now be directed like functions for complex tasks.</div></li>
+                           <li class="flex items-start"><span class="w-4 h-4 mr-3 mt-1 rounded-full bg-[#58A6FF] flex-shrink-0"></span><div><span class="font-bold">Rising AI-Native UX:</span> Growing demand for intuitive, smart interfaces over traditional dApp UIs.</div></li>
+                           <li class="flex items-start"><span class="w-4 h-4 mr-3 mt-1 rounded-full bg-[#58A6FF] flex-shrink-0"></span><div><span class="font-bold">Increasing Security Expectations:</span> Users are rejecting solutions that compromise self-custody.</div></li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col items-center justify-center card p-6 rounded-xl">
+                        <h3 class="text-xl font-bold text-white text-center mb-4">Market Readiness</h3>
+                        <div class="chart-container">
+                             <canvas id="marketTrendsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Section: Join the Community -->
+        <div class="py-16 sm:py-24 bg-[#161B22]">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div id="community" class="text-center">
+                    <h2 class="text-base font-semibold text-[#58A6FF] tracking-wider uppercase">6. Join the Community</h2>
+                    <p class="mt-2 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">Connect with Pilso OS</p>
+                    <p class="mt-4 max-w-3xl mx-auto text-xl text-gray-400">Ready to be part of the secure AI-native Web3 revolution? Join our vibrant community and stay updated!</p>
+                </div>
+                <div class="mt-12 flex flex-col sm:flex-row justify-center items-center gap-6">
+                    <a href="https://t.me/PilsoOS" target="_blank" class="btn-primary">
+                        <span class="text-2xl mr-2">✈</span> Join Telegram
+                    </a>
+                    <a href="https://x.com/Pilso_OS" target="_blank" class="btn-primary">
+                        <span class="text-2xl mr-2">✖</span> Follow on X
+                    </a>
+                    <a href="https://www.pil.so/" target="_blank" class="btn-primary">
+                        <span class="text-2xl mr-2">🌐</span> Visit Website
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- End New Section -->
+
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const wrapLabel = (str, maxWidth) => {
+        if (typeof str !== 'string' || str.length <= maxWidth) {
+            return str;
+        }
+        const words = str.split(' ');
+        let currentLine = '';
+        const lines = [];
+        for (const word of words) {
+            if ((currentLine + ' ' + word).trim().length > maxWidth && currentLine.length > 0) {
+                lines.push(currentLine);
+                currentLine = word;
+            } else {
+                currentLine = (currentLine + ' ' + word).trim();
+            }
+        }
+        if (currentLine.length > 0) {
+            lines.push(currentLine);
+        }
+        return lines;
+    };
+
+    const tooltipTitleCallback = (tooltipItems) => {
+        const item = tooltipItems[0];
+        if (!item) return '';
+        let label = item.chart.data.labels[item.dataIndex];
+        return Array.isArray(label) ? label.join(' ') : label;
+    };
+
+    const defaultChartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#E6EDF3',
+                    font: {
+                        family: "'Inter', sans-serif"
+                    }
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    title: tooltipTitleCallback
+                },
+                titleFont: {
+                    family: "'Inter', sans-serif",
+                    size: 14,
+                },
+                bodyFont: {
+                    family: "'Inter', sans-serif",
+                    size: 12,
+                },
+                backgroundColor: '#161B22',
+                titleColor: '#E6EDF3',
+                bodyColor: '#E6EDF3',
+                borderColor: '#30363d',
+                borderWidth: 1,
+            }
+        },
+    };
+
+    const tokenomicsCtx = document.getElementById('tokenomicsChart');
+    if (tokenomicsCtx) {
+        new Chart(tokenomicsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Liquidity', 'Marketing', 'Development', 'Ecosystem', 'Reserves / Future Growth'],
+                datasets: [{
+                    label: 'Token Allocation',
+                    data: [75, 10, 5, 5, 5],
+                    backgroundColor: [
+                        '#39D353',
+                        '#58A6FF',
+                        '#2f81f7',
+                        '#218bff',
+                        '#1e90ff'
+                    ],
+                    borderColor: '#161B22',
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                cutout: '70%',
+            }
+        });
+    }
+
+    const marketTrendsCtx = document.getElementById('marketTrendsChart');
+    if (marketTrendsCtx) {
+        new Chart(marketTrendsCtx, {
+            type: 'radar',
+            data: {
+                labels: [
+                    wrapLabel('Wallet Standardization', 16), 
+                    wrapLabel('Programmable LLMs', 16), 
+                    wrapLabel('Rising AI-Native UX Demand', 16), 
+                    wrapLabel('Increasing Security Expectations', 16),
+                ],
+                datasets: [{
+                    label: 'Trend Maturity',
+                    data: [90, 85, 80, 95],
+                    fill: true,
+                    backgroundColor: 'rgba(57, 211, 83, 0.2)',
+                    borderColor: '#39D353',
+                    pointBackgroundColor: '#39D353',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#39D353'
+                }]
+            },
+            options: {
+                ...defaultChartOptions,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(230, 237, 243, 0.2)' },
+                        grid: { color: 'rgba(230, 237, 243, 0.2)' },
+                        pointLabels: { 
+                            color: '#E6EDF3',
+                            font: {
+                                size: 12,
+                                family: "'Inter', sans-serif",
+                            }
+                        },
+                        ticks: {
+                            color: '#E6EDF3',
+                            backdropColor: 'rgba(0,0,0,0)',
+                            stepSize: 25,
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 100
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+
+</body>
+</html>
